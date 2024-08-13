@@ -1,11 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css'; // This is for any global styles, you can create this or omit it if unnecessary.
-import App from './App'; // Assuming your main component is App.js
+import React from "react";
+import ReactDOM from "react-dom";
+import Router from "./Router";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+
+ReactDOM.render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    <Router />
+  </React.StrictMode>,
+  document.getElementById("root")
 );
