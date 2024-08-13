@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 function CancelBookingForm() {
   const [email, setEmail] = useState('');
@@ -7,32 +8,28 @@ function CancelBookingForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch(`http://localhost:8080/api/cancel/${bookingId}`, {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email }),
-    })
-      .then(response => response.json())
-      .then(data => setMessage(data.message));
+    axios.delete(`http://localhost:8080/api/cancel/${bookingId}`, { data: { email } })
+      .then(response => setMessage('Booking cancelled successfully!'))
+      .catch(error => setMessage('Error cancelling booking.'));
   };
 
   return (
     <div>
       <h2>Cancel Booking</h2>
       <form onSubmit={handleSubmit}>
-        <input
-          type="email"
+        <input 
+          type="email" 
+          placeholder="Enter your email" 
           value={email}
-          onChange={e => setEmail(e.target.value)}
-          placeholder="Enter your email"
-          required
+          onChange={(e) => setEmail(e.target.value)}
+          required 
         />
-        <input
-          type="text"
+        <input 
+          type="text" 
+          placeholder="Enter booking ID" 
           value={bookingId}
-          onChange={e => setBookingId(e.target.value)}
-          placeholder="Enter booking ID"
-          required
+          onChange={(e) => setBookingId(e.target.value)}
+          required 
         />
         <button type="submit">Cancel Booking</button>
       </form>

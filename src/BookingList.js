@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function BookingList() {
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8080/api/bookings')
-      .then(response => response.json())
-      .then(data => setBookings(data));
+    axios.get('http://localhost:8080/api/bookings')
+      .then(response => setBookings(response.data))
+      .catch(error => console.error('Error fetching bookings:', error));
   }, []);
 
   return (
@@ -15,7 +16,7 @@ function BookingList() {
       <ul>
         {bookings.map(booking => (
           <li key={booking.id}>
-            {booking.date} - {booking.time} (ID: {booking.id})
+            {booking.id} - {booking.date} {booking.time}
           </li>
         ))}
       </ul>
