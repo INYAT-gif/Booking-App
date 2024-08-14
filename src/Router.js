@@ -6,17 +6,17 @@ import {
   useNavigate,
   useParams,
 } from "react-router-dom";
-import AxiosDemo from "./AxiosDemo";
+import Axios from "./Axios";
 import Header from "./Header";
 
-const RouterDemo = () => {
+const Router = () => {
   return (
     <div>
       <Router>
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/booking" element={<AxiosDemo />} />
+          <Route path="/booking" element={<Axios />} />
           <Route path="/home" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/cancel" element={<CancelBooking />} />
@@ -67,4 +67,4 @@ const Home = () => {
   );
 };
 
-export default RouterDemo;
+export default Router;

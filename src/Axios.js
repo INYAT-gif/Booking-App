@@ -1,7 +1,7 @@
 const Axios = () => {
-   // const navigate = useNavigate();
-   // const [bookings, setBookings] = useState([]);
-   // const baseUrl = "http://localhost:8080";
+    const navigate = useNavigate();
+    const [bookings, setBookings] = useState([]);
+    const baseUrl = "http://localhost:8080";
   
     const getBookingsClickHandler = async () => {
       console.log("Start");
