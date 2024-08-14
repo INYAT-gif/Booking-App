@@ -1,69 +1,36 @@
-import React from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
-import Axios from "./Axios";
-import Header from "./Header";
+import React from 'react';
+import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
+import Home from './Home';
+import BookingList from './BookingList';
+import BookingForm from './BookingForm';
+import CancelBookingForm from './CancelBookingForm';
 
 const Router = () => {
   return (
-    <div>
-      <Router>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/booking" element={<Axios />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/cancel" element={<CancelBooking />} />
-          <Route path="/details/:id" element={<DetailsBooking />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Router>
-    </div>
-  );
-};
-
-const About = () => <h1>About Component</h1>;
-const CancelBooking = () => <h1>Cancel Booking Component</h1>;
-const NotFound = () => <h1>404 Not Found</h1>;
-
-const DetailsBooking = () => {
-  const params = useParams();
-  // TODO: Using useEffect, you can call get booking details by id and then set the response data
-  // into the booking object and display data on a card
-  return (
-    <div>
-      <h3>Details</h3>
-      <p>Booking ID: {params.id}</p>
-    </div>
-  );
-};
-
-const Home = () => {
-  const navigate = useNavigate();
-  return (
-    <div>
-      <h1>Home Component</h1>
-      <a
-        href="#"
-        className="btn btn-outline-danger"
-        onClick={() => navigate(-1)}
-      >
-        Back
-      </a>
-      <a
-        href="#"
-        className="btn btn-outline-success"
-        onClick={() => navigate("/about")}
-      >
-        About
-      </a>
-    </div>
+    <BrowserRouter>
+      <nav>
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/bookings">Bookings</Link>
+          </li>
+          <li>
+            <Link to="/book">Book a Slot</Link>
+          </li>
+          <li>
+            <Link to="/cancel">Cancel a Booking</Link>
+          </li>
+        </ul>
+      </nav>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/bookings" component={BookingList} />
+        <Route path="/book" component={BookingForm} />
+        <Route path="/cancel" component={CancelBookingForm} />
+      </Switch>
+    </BrowserRouter>
   );
 };
 
