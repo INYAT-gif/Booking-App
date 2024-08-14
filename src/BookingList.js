@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const BookingList = () => {
   const [bookings, setBookings] = useState([]);
@@ -6,17 +7,20 @@ const BookingList = () => {
   const [to, setTo] = useState('');
 
   useEffect(() => {
-    // TO DO: implement API call to fetch bookings
-    // fetch('/api/v1/booking/from/{from}/to/{to}')
-    //   .then(response => response.json())
-    //   .then(data => setBookings(data));
+    axios.get(`http://localhost:8080/api/v1/booking/from/${from}/to/${to}`)
+      .then(response => {
+        setBookings(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }, [from, to]);
 
-  const handleFromDateChange = (event) => {
+  const handleFromChange = (event) => {
     setFrom(event.target.value);
   };
 
-  const handleToDateChange = (event) => {
+  const handleToChange = (event) => {
     setTo(event.target.value);
   };
 
@@ -26,16 +30,18 @@ const BookingList = () => {
       <form>
         <label>
           From:
-          <input type="date" value={from} onChange={handleFromDateChange} />
+          <input type="date" value={from} onChange={handleFromChange} />
         </label>
         <label>
           To:
-          <input type="date" value={to} onChange={handleToDateChange} />
+          <input type="date" value={to} onChange={handleToChange} />
         </label>
       </form>
       <ul>
-        {bookings.map((booking) => (
-          <li key={booking.id}>{booking.dateTime}</li>
+        {bookings.map(booking => (
+          <li key={booking.id}>
+            {booking.dateTime} - {booking.booked ? 'Booked' : 'Available'}
+          </li>
         ))}
       </ul>
     </div>
