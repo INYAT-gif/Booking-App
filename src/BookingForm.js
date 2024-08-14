@@ -1,47 +1,49 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-function BookingForm() {
+const BookingForm = () => {
   const [email, setEmail] = useState('');
-  const navigate = useNavigate();
+  const [id, setId] = useState('');
+  const [booking, setBooking] = useState({});
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    fetch('http://localhost:8080/api/book', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email }),
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
-    .then(() => navigate('/'))
-    .catch(error => {
-      console.error('There was a problem with the fetch operation:', error);
-      alert('Failed to book a slot. Please try again later.');
-    });
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const handleIdChange = (event) => {
+    setId(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    axios.post(`http://localhost:8080/api/v1/booking/book`, { email, id })
+      .then(response => {
+        setBooking(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
   };
 
   return (
     <div>
-      <h2>Book a Slot</h2>
+      <h1>Book a New Booking</h1>
       <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          id="email" // Added id attribute
-          name="email" // Added name attribute
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          placeholder="Enter your email"
-          required
-        />
+        <label>
+          Email:
+          <input type="email" value={email} onChange={handleEmailChange} />
+        </label>
+        <label>
+          Booking ID:
+          <input type="text" value={id} onChange={handleIdChange} />
+        </label>
         <button type="submit">Book</button>
       </form>
+      {booking && (
+        <p>Booking successful! Booking ID: {booking.id}</p>
+      )}
     </div>
   );
-}
+};
 
 export default BookingForm;

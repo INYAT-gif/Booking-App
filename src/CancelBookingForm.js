@@ -1,44 +1,49 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
-function CancelBookingForm() {
+const CancelBookingForm = () => {
   const [email, setEmail] = useState('');
-  const [bookingId, setBookingId] = useState('');
-  const [message, setMessage] = useState('');
+  const [id, setId] = useState('');
+  const [cancellationStatus, setCancellationStatus] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    fetch(`http://localhost:8080/api/cancel/${bookingId}`, {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email }),
-    })
-      .then(response => response.json())
-      .then(data => setMessage(data.message));
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const handleIdChange = (event) => {
+    setId(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    axios.put(`http://localhost:8080/api/v1/booking/cancel`, { email, id })
+      .then(response => {
+        setCancellationStatus(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
   };
 
   return (
     <div>
-      <h2>Cancel Booking</h2>
+      <h1>Cancel a Booking</h1>
       <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          placeholder="Enter your email"
-          required
-        />
-        <input
-          type="text"
-          value={bookingId}
-          onChange={e => setBookingId(e.target.value)}
-          placeholder="Enter booking ID"
-          required
-        />
-        <button type="submit">Cancel Booking</button>
+        <label>
+          Email:
+          <input type="email" value={email} onChange={handleEmailChange} />
+        </label>
+        <label>
+          Booking ID:
+          <input type="text" value={id} onChange={handleIdChange} />
+        </label>
+        <button type="submit">Cancel</button>
       </form>
-      {message && <p>{message}</p>}
+      {cancellationStatus && (
+        <p>Booking cancellation status: {cancellationStatus}</p>
+      )}
     </div>
   );
-}
+};
 
 export default CancelBookingForm;
