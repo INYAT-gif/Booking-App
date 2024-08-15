@@ -1,11 +1,13 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import Router from "./Router";
+import ReactDom from "react-dom/client";
+import "bootstrap/dist/css/bootstrap.css";
+import AxiosDemo from "./ex8-axios-router/AxiosDemo";
+import Header from "./ex8-axios-router/Header";
+import RouterDemo from "./ex8-axios-router/RouterDemo";
 
+const root = ReactDom.createRoot(document.getElementById("root"));
 
-ReactDOM.render(
-  <React.StrictMode>
-    <Router />
-  </React.StrictMode>,
-  document.getElementById("root")
+root.render(
+  <div className="container">
+    <RouterDemo />
+  </div>
 );
