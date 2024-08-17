@@ -1,19 +1,22 @@
-import React from 'react';
-import BookingForm from './BookingForm';
-import CancelBookingForm from './CancelBookingForm';
-import BookingsList from './BookingsList';
-import BookingDetails from './BookingDetails';
+// src/App.js
 
-function App() {
+import React from 'react';
+import BookingForm from './components/BookingForm';
+import BookingList from './components/BookingList';
+import BookingDetails from './components/BookingDetails';
+
+const App = () => {
   return (
-    <div>
+    <div className="App">
       <h1>Booking App</h1>
       <BookingForm />
-      <CancelBookingForm />
-      <BookingsList />
+      <hr />
+      <BookingList />
+      <hr />
       <BookingDetails />
     </div>
   );
-}
+};
 
 export default App;
+
