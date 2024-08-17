@@ -8,40 +8,44 @@ const AxiosDemo = () => {
   const baseUrl = "http://localhost:8080";
 
   const getBookingsClickHandler = async () => {
-    console.log("Start");
-    await axios
-      .get(baseUrl + "/api/v1/booking/from/2024-08-13/to/2024-08-15")
-      .then((response) => {
-        console.log("Response: ", response);
-        if (response.status === 200) {
-          console.log("Data ", response.data);
-          setBookings(response.data);
-        }
-      })
-      .catch((error) => {
-        console.log("Error: ", error);
-      });
-    console.log("End");
-    //Output:
-    //1. start 2. reponse 3.end
+    try {
+      const response = await axios.get(
+        baseUrl + "/api/v1/booking/from/2024-08-13/to/2024-08-15"
+      );
+      if (response.status === 200) {
+        setBookings(response.data);
+      }
+    } catch (error) {
+      console.error("Error fetching bookings:", error);
+    }
   };
 
   const bookBookingClickHandler = async (id, email) => {
-    await axios
-      .post(baseUrl + "/api/v1/booking/book", { id, email })
-      .then((response) => {
-        console.log("Response: ", response);
-        if (response.status === 201) {
-          console.log("Booking successful.");
-          getBookingsClickHandler();
-        }
-      })
-      .catch((error) => {
-        console.log("Error: ", error);
-        if (error.response.status === 400) {
-          console.log(error.response.data);
-        }
+    try {
+      const response = await axios.post(baseUrl + "/api/v1/booking/book", {
+        id,
+        email,
       });
+      if (response.status === 200) {
+        getBookingsClickHandler();
+      }
+    } catch (error) {
+      console.error("Error booking slot:", error);
+    }
+  };
+
+  const cancelBookingClickHandler = async (id, email) => {
+    try {
+      const response = await axios.put(baseUrl + "/api/v1/booking/cancel", {
+        id,
+        email,
+      });
+      if (response.status === 200) {
+        getBookingsClickHandler();
+      }
+    } catch (error) {
+      console.error("Error canceling booking:", error);
+    }
   };
 
   return (
@@ -73,6 +77,17 @@ const AxiosDemo = () => {
                   >
                     Details
                   </button>
+                  <button
+                    className="btn btn-danger mt-2"
+                    onClick={() =>
+                      cancelBookingClickHandler(
+                        booking.id,
+                        "inyat.nathani@gmail.com"
+                      )
+                    }
+                  >
+                    Cancel
+                  </button>
                 </div>
                 <div className="d-grid card-footer">
                   <button
@@ -83,7 +98,7 @@ const AxiosDemo = () => {
                     onClick={() =>
                       bookBookingClickHandler(
                         booking.id,
-                        "negarbaharmand12@gmail.com"
+                        "inyat.nathani@gmail.com"
                       )
                     }
                     disabled={booking.booked}

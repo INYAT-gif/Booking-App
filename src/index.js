@@ -1,11 +1,9 @@
-import ReactDom from "react-dom/client";
+import React from "react";
+import ReactDOM from "react-dom/client";
 import "bootstrap/dist/css/bootstrap.css";
-import AxiosDemo from "./ex8-axios-router/AxiosDemo";
-import Header from "./ex8-axios-router/Header";
-import RouterDemo from "./ex8-axios-router/RouterDemo";
+import RouterDemo from "./RouterDemo";
 
-const root = ReactDom.createRoot(document.getElementById("root"));
-
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <div className="container">
     <RouterDemo />
