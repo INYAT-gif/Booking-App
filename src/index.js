@@ -1,10 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import RouterComponent from './RouterComponent';
+import React from "react";
+import ReactDOM from "react-dom";
+import AppRouter from "./AppRouter";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <RouterComponent />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+ReactDOM.render(<AppRouter />, document.getElementById("root"));
