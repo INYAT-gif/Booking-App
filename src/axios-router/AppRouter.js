@@ -7,7 +7,9 @@ import {
   useParams,
 } from "react-router-dom";
 import AxiosDemo from "./AxiosDemo";
-import Header from "./axios-router/Header";
+import Header from "./Header";
+import CancelBooking from "./CancelBooking";
+import BookingDetails from "./BookingDetails";
 
 const AppRouter = () => {
   return (
@@ -19,7 +21,7 @@ const AppRouter = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/cancel" element={<CancelBooking />} />
-        <Route path="/details/:id" element={<DetailsBooking />} />
+        <Route path="/details/:id" element={<BookingDetails />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
@@ -28,38 +30,7 @@ const AppRouter = () => {
 
 const About = () => <h1>About Component</h1>;
 
-const CancelBooking = () => (
-  <div className="container mt-5">
-    <h2>Cancel Booking</h2>
-    <div className="mb-3">
-      <label htmlFor="bookingId" className="form-label">
-        Booking ID:
-      </label>
-      <input type="text" className="form-control" id="bookingId" />
-    </div>
-    <div className="mb-3">
-      <label htmlFor="email" className="form-label">
-        Email:
-      </label>
-      <input type="email" className="form-control" id="email" />
-    </div>
-    <button type="button" className="btn btn-danger">
-      Cancel Booking
-    </button>
-  </div>
-);
-
 const NotFound = () => <h1>404 Not Found</h1>;
-
-const DetailsBooking = () => {
-  const params = useParams();
-  return (
-    <div className="container mt-5">
-      <h3>Details</h3>
-      <p>Booking ID: {params.id}</p>
-    </div>
-  );
-};
 
 const Home = () => {
   const navigate = useNavigate();

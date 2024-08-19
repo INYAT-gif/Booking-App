@@ -1,6 +1,11 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import AppRouter from "./AppRouter";
+import ReactDom from "react-dom/client";
+import AppRouter from './axios-router/AppRouter';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-ReactDOM.render(<AppRouter />, document.getElementById("root"));
+const root = ReactDom.createRoot(document.getElementById("root"));
+root.render(
+
+  <div className="container">
+    <AppRouter />
+  </div>
+);
